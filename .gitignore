@@ -1,0 +1,34 @@
+# Node / npm
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tgz
+
+# Cordova build output
+platforms/
+plugins/
+build/
+.gradle/
+
+# Java / Android
+*.iml
+*.class
+*.keystore
+*.jks
+local.properties
+captures/
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test / coverage
+coverage/
+.nyc_output/

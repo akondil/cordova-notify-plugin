@@ -1,0 +1,7 @@
+# Development / test artifacts
+*.log
+*.bak
+.DS_Store
+.vscode/
+.idea/
+node_modules/

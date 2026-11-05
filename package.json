@@ -1,0 +1,61 @@
+{
+  "name": "cordova-notify-plugin",
+  "version": "1.1.0",
+  "description": "Cordova plugin to schedule and cancel local alarm notifications on Android. Alarms work while the app is closed and are restored after a reboot.",
+  "main": "www/alarmNotify.js",
+  "types": "index.d.ts",
+  "cordova": {
+    "id": "com.solocode.alarmnotify",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova",
+    "cordova-plugin",
+    "cordova-android",
+    "android",
+    "alarm",
+    "alarm-manager",
+    "notification",
+    "notifications",
+    "local-notification",
+    "schedule",
+    "background"
+  ],
+  "files": [
+    "plugin.xml",
+    "package.json",
+    "index.d.ts",
+    "README.md",
+    "CHANGELOG.md",
+    "www/",
+    "src/"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "cordovaDependencies": {
+      "1.0.0": {
+        "cordova-android": ">=12.0.0",
+        "cordova": ">=12.0.0"
+      },
+      "1.1.0": {
+        "cordova-android": ">=12.0.0",
+        "cordova": ">=12.0.0"
+      }
+    }
+  },
+  "author": "Adil Kondiloğlu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akondil/cordova-notify-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/akondil/cordova-notify-plugin/issues"
+  },
+  "homepage": "https://github.com/akondil/cordova-notify-plugin#readme"
+}

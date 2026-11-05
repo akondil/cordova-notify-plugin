@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.solocode.alarmnotify" version="1.1.0"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>Cordova Notify Plugin</name>
+    <description>Schedule and cancel local alarm notifications on Android.</description>
+    <license>MIT</license>
+    <author>Adil Kondiloğlu</author>
+    <keywords>cordova,android,alarm,notification,local-notification,schedule,background</keywords>
+
+    <engines>
+        <engine name="cordova-android" version=">=12.0.0" />
+    </engines>
+
+    <js-module name="alarmNotify" src="www/alarmNotify.js">
+        <clobbers target="cordova.plugins.alarmNotify" />
+    </js-module>
+
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="AlarmNotify">
+                <param name="android-package" value="com.solocode.alarmnotify.AlarmNotify" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/AlarmNotify.java" target-dir="src/com/solocode/alarmnotify" />
+        <source-file src="src/android/AlarmReceiver.java" target-dir="src/com/solocode/alarmnotify" />
+        <source-file src="src/android/BootReceiver.java" target-dir="src/com/solocode/alarmnotify" />
+
+        <resource-file src="src/android/res/drawable/alarm_notify_icon.xml" target="res/drawable/alarm_notify_icon.xml" />
+
+        <!-- Cordova Android 12 uses compileSdk 33; keep a core version compatible with it. -->
+        <framework src="androidx.core:core:1.10.1" />
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+            <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+            <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+            <uses-permission android:name="android.permission.VIBRATE" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <receiver
+                android:name="com.solocode.alarmnotify.AlarmReceiver"
+                android:exported="false" />
+
+            <receiver
+                android:name="com.solocode.alarmnotify.BootReceiver"
+                android:exported="true">
+                <intent-filter>
+                    <action android:name="android.intent.action.BOOT_COMPLETED" />
+                    <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                </intent-filter>
+            </receiver>
+        </config-file>
+    </platform>
+</plugin>
