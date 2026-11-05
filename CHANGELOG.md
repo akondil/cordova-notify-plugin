@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-11-05
+
+### Added
+
+- GitHub Actions OIDC publishing workflow for npm releases with provenance.
+  No runtime changes.
+
 ## [1.1.0] - 2026-11-05
 
 ### Added

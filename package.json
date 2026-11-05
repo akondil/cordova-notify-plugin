@@ -1,6 +1,6 @@
 {
   "name": "cordova-notify-plugin",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Cordova plugin to schedule and cancel local alarm notifications on Android. Alarms work while the app is closed and are restored after a reboot.",
   "main": "www/alarmNotify.js",
   "types": "index.d.ts",
