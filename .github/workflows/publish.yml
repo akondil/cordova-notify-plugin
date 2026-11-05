@@ -1,0 +1,68 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Show tool versions
+        run: |
+          node --version
+          npm --version
+
+      - name: Verify tag matches package version
+        if: github.event_name == 'release'
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          PACKAGE_VERSION="$(node -p "require('./package.json').version")"
+          echo "Tag: ${TAG_VERSION}"
+          echo "package.json: ${PACKAGE_VERSION}"
+          test "${TAG_VERSION}" = "${PACKAGE_VERSION}"
+
+      - name: Run tests
+        run: npm test
+
+      - name: Check package contents
+        run: npm pack --dry-run
+
+      - name: Check if version is already published
+        id: version_check
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="$(node -p "require('./package.json').version")"
+          if npm view "cordova-notify-plugin@${VERSION}" version >/dev/null 2>&1; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            echo "cordova-notify-plugin@${VERSION} is already published; skipping npm publish."
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish with provenance
+        if: steps.version_check.outputs.published != 'true'
+        run: npm publish --provenance --access public
